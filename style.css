@@ -1,0 +1,324 @@
+/*1. VARIABILI E CONFIGURAZIONE (Le tue "Costanti")*/
+:root {
+    --primary: #d4af37;    /*Oro barocco*/
+    --accent: #ff4757;     /*Rosso sportivo*/
+    --bg-dark: #0f0f0f;
+    --glass: rgba(255, 255, 255, 0.1);
+    --text: #f0f0f0;
+    --transition: all 0.3s ease;
+}
+
+/*Reset & Base*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #1a1a1a;
+    background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                      url('https://www.civitatis.com/f/italia/galatina/galatina.jpg');
+    background-attachment: fixed;
+    background-size: cover;
+    color: var(--text);
+    line-height: 1.6;
+}
+
+/*2. ELEMENTI GLOBALI (Link, Bottoni, Footer)*/
+a {
+    color: var(--primary);
+    text-decoration: none;
+    transition: var(--transition);
+    font-weight: 500;
+}
+
+a:hover {
+    color: white;
+    text-shadow: 0 0 10px var(--primary);
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background: var(--primary);
+    color: #000;
+    border-radius: 5px;
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+footer {
+    text-align: center;
+    padding: 2rem;
+    background: #000;
+    margin-top: 40px;
+}
+
+/*3. HEADER E NAVBAR*/
+header {
+    background: rgba(0,0,0,0.9);
+    padding: 1rem 5%;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 2px solid var(--primary);
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+}
+
+.nav-links li a {
+    color: white;
+    margin-left: 25px;
+}
+
+.nav-links li a:hover, .active {
+    color: var(--primary);
+}
+
+.back-link {
+    color: var(--primary);
+    font-weight: bold;
+}
+
+/*4. Card e Griglie*/
+.card {
+    background: var(--glass);
+    padding: 20px;
+    border-radius: 15px;
+    backdrop-filter: blur(5px);
+    transition: var(--transition);
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary);
+}
+
+/*5. LAYOUT PAGINE SPECIFICHE*/
+
+/*Home*/
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 3rem 10%;
+}
+
+/*Storia*/
+.storia-container {
+    max-width: 900px;
+    margin: 40px auto;
+    background: var(--glass);
+    padding: 40px;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+}
+
+.drop-cap::first-letter {
+    float: left;
+    font-size: 70px;
+    color: var(--primary);
+    font-family: serif;
+    margin-right: 10px;
+    line-height: 1;
+}
+
+/*Luoghi*/
+.luoghi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 15px;
+    padding: 2rem 5%;
+}
+
+.luogo-card {
+    position: relative;
+    height: 350px;
+    border-radius: 15px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.luogo-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: 0.5s;
+}
+
+.overlay {
+    position: absolute;
+    bottom: 0;
+    background: linear-gradient(transparent, black);
+    width: 100%;
+    padding: 20px;
+    transform: translateY(50px);
+    transition: 0.5s;
+    opacity: 0;
+}
+
+.luogo-card:hover .overlay {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.luogo-card:hover img {
+    transform: scale(1.1);
+}
+
+/*Sport E Sidebar*/
+.sport-flex {
+    display: flex;
+    gap: 30px;
+    padding: 2rem 5%;
+    flex-wrap: wrap;
+}
+
+.main-news {
+    flex: 2;
+    background: var(--glass);
+    padding: 25px;
+    border-radius: 15px;
+}
+
+.sidebar-stats {
+    flex: 1;
+    background: #222;
+    padding: 25px;
+    border-radius: 15px;
+    border-top: 5px solid var(--accent);
+}
+
+.sidebar-stats h3 {
+    color: var(--primary);
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+
+.sidebar-stats a {
+    display: block;
+    padding: 10px 15px;
+    margin-bottom: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    border-left: 0 solid var(--accent);
+}
+
+.sidebar-stats a:hover {
+    background: rgba(255, 255, 255, 0.1);
+    padding-left: 20px;
+    border-left: 4px solid var(--accent);
+    color: white;
+}
+
+/*6. SEZIONE GIOCATORI E DETTAGLIO*/
+
+/*Griglia Roster*/
+.player-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    padding: 20px;
+}
+
+.player-card {
+    background: var(--glass);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.player-image {
+    height: 350px;
+    overflow: hidden;
+}
+
+.player-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: 0.5s;
+}
+
+.player-card:hover {
+    transform: scale(1.03);
+    border-color: var(--primary);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.player-card:hover img {
+    transform: scale(1.1);
+}
+
+.player-info { padding: 20px; text-align: center; }
+.player-info .number { color: var(--primary); font-weight: bold; font-size: 1.5rem; }
+
+/*Dettaglio Giocatore*/
+.player-detail-container { padding: 50px 10%; }
+
+.detail-flex {
+    display: flex;
+    align-items: flex-start; /* Allineamento in alto risolto */
+    gap: 50px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.detail-image {
+    flex: 0 0 350px;
+    position: sticky;
+    top: 100px;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 3px solid var(--primary);
+}
+
+.detail-image img {
+    width: 100%;
+    display: block;
+}
+
+.detail-content { flex: 2; min-width: 300px; }
+.detail-content h1 span { color: var(--primary); }
+
+.title-section h1 {
+    font-size: 3rem;
+    line-height: 1;
+    margin-bottom: 10px;
+}
+
+.stats-box { 
+    display: flex; 
+    gap: 20px; 
+    margin: 25px 0; 
+    background: rgba(212, 175, 55, 0.1); 
+    padding: 20px; 
+    border-radius: 10px;
+}
+
+.stat span { 
+    display: block; 
+    font-size: 0.9rem; 
+    color: var(--primary); 
+    text-transform: uppercase; 
+}
+
+.video-slot video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
