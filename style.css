@@ -100,6 +100,29 @@ header.is-scrolled {
     font-size: 1.2rem;
     font-weight: 800;
     letter-spacing: 0;
+    color: var(--text);
+    position: relative;
+    padding-bottom: 6px;
+}
+
+.logo:hover {
+    color: var(--text);
+    text-shadow: 0 0 10px var(--primary);
+}
+
+.logo::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background: var(--primary);
+    transition: var(--transition);
+}
+
+.logo:hover::after {
+    width: 100%;
 }
 
 .logo span {
