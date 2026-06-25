@@ -4,7 +4,9 @@
     --accent: #ff4757;     /*Rosso sportivo*/
     --bg-dark: #0f0f0f;
     --glass: rgba(255, 255, 255, 0.1);
+    --glass-strong: rgba(16, 16, 16, 0.78);
     --text: #f0f0f0;
+    --muted: #c7c7c7;
     --transition: all 0.3s ease;
 }
 
@@ -24,6 +26,12 @@ body {
     background-size: cover;
     color: var(--text);
     line-height: 1.6;
+    min-height: 100vh;
+}
+
+body.menu-open,
+body.cinema-open {
+    overflow: hidden;
 }
 
 /*2. ELEMENTI GLOBALI (Link, Bottoni, Footer)*/
@@ -41,12 +49,19 @@ a:hover {
 
 .btn {
     display: inline-block;
-    padding: 10px 20px;
+    padding: 12px 22px;
     background: var(--primary);
     color: #000;
-    border-radius: 5px;
+    border-radius: 6px;
     margin-top: 15px;
     font-weight: bold;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
+}
+
+.btn:hover {
+    color: #000;
+    transform: translateY(-2px);
+    text-shadow: none;
 }
 
 footer {
@@ -58,18 +73,37 @@ footer {
 
 /*3. HEADER E NAVBAR*/
 header {
-    background: rgba(0,0,0,0.9);
+    background: rgba(0,0,0,0.84);
     padding: 1rem 5%;
     position: sticky;
     top: 0;
     z-index: 1000;
     border-bottom: 2px solid var(--primary);
+    backdrop-filter: blur(14px);
+    transition: var(--transition);
+}
+
+header.is-scrolled {
+    padding-top: 0.7rem;
+    padding-bottom: 0.7rem;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
 }
 
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 20px;
+}
+
+.logo {
+    font-size: 1.2rem;
+    font-weight: 800;
+    letter-spacing: 0;
+}
+
+.logo span {
+    color: var(--primary);
 }
 
 .nav-links {
@@ -80,10 +114,28 @@ header {
 .nav-links li a {
     color: white;
     margin-left: 25px;
+    position: relative;
+    padding-bottom: 6px;
 }
 
 .nav-links li a:hover, .active {
     color: var(--primary);
+}
+
+.nav-links li a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background: var(--primary);
+    transition: var(--transition);
+}
+
+.nav-links li a:hover::after,
+.nav-links li a.active::after {
+    width: 100%;
 }
 
 .back-link {
@@ -225,6 +277,38 @@ header {
 
 /*6. SEZIONE GIOCATORI E DETTAGLIO*/
 
+.team-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 320px;
+    gap: 28px;
+    align-items: start;
+    padding: 32px 5%;
+}
+
+.container-squadra {
+    min-width: 0;
+}
+
+.team-photos {
+    position: sticky;
+    top: 96px;
+    display: grid;
+    gap: 16px;
+    padding: 14px;
+    background: var(--glass-strong);
+    border: 1px solid rgba(212, 175, 55, 0.45);
+    border-radius: 8px;
+    box-shadow: 0 18px 42px rgba(0, 0, 0, 0.28);
+}
+
+.team-photos img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
 /*Griglia Roster*/
 .player-grid {
     display: grid;
@@ -321,4 +405,235 @@ header {
     height: 100%;
     object-fit: cover;
     border-radius: 10px;
+}
+
+/*7. INTERAZIONI JAVASCRIPT E RESPONSIVE*/
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    z-index: 2000;
+    box-shadow: 0 0 18px rgba(212, 175, 55, 0.55);
+}
+
+.menu-toggle {
+    display: none;
+    width: 44px;
+    height: 44px;
+    border: 1px solid rgba(255,255,255,0.16);
+    border-radius: 8px;
+    background: rgba(255,255,255,0.08);
+    cursor: pointer;
+}
+
+.menu-toggle span {
+    display: block;
+    width: 20px;
+    height: 2px;
+    margin: 5px auto;
+    background: white;
+    transition: var(--transition);
+}
+
+.reveal {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+    transition-delay: var(--delay, 0ms);
+}
+
+.reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.card,
+.luogo-card,
+.main-news,
+.sidebar-stats,
+.storia-container,
+.player-card,
+.glass-box {
+    border-radius: 8px;
+    box-shadow: 0 18px 42px rgba(0, 0, 0, 0.24);
+}
+
+.card,
+.storia-container,
+.main-news,
+.player-card,
+.glass-box {
+    background: var(--glass-strong);
+    border: 1px solid rgba(255,255,255,0.12);
+    backdrop-filter: blur(10px);
+}
+
+.luogo-card {
+    box-shadow: 0 18px 42px rgba(0, 0, 0, 0.28);
+}
+
+.overlay {
+    background: linear-gradient(transparent, rgba(0,0,0,0.92));
+}
+
+.highlights-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 18px;
+    margin-top: 18px;
+}
+
+.video-slot {
+    position: relative;
+    min-height: 280px;
+    background: rgba(0,0,0,0.42);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.video-slot video {
+    border-radius: 8px;
+}
+
+.video-expand {
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    padding: 9px 14px;
+    border: 0;
+    border-radius: 6px;
+    background: var(--primary);
+    color: #111;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+}
+
+.cinema-mode {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 28px;
+    background: rgba(0,0,0,0.9);
+    z-index: 3000;
+}
+
+.cinema-mode.is-open {
+    display: flex;
+}
+
+.cinema-mode video {
+    width: min(100%, 980px);
+    max-height: 82vh;
+    border-radius: 8px;
+    background: black;
+    box-shadow: 0 24px 70px rgba(0,0,0,0.55);
+}
+
+.cinema-close {
+    position: fixed;
+    top: 20px;
+    right: 24px;
+    width: 44px;
+    height: 44px;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    color: white;
+    font-size: 2rem;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.media-error::after {
+    content: "Immagine non disponibile";
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    background: rgba(0,0,0,0.72);
+    color: var(--muted);
+}
+
+.stats-box {
+    flex-wrap: wrap;
+    border-radius: 8px;
+}
+
+@media (max-width: 760px) {
+    header {
+        padding: 0.8rem 5%;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .nav-links {
+        position: fixed;
+        inset: 70px 5% auto 5%;
+        display: grid;
+        gap: 10px;
+        padding: 18px;
+        background: rgba(10,10,10,0.96);
+        border: 1px solid rgba(255,255,255,0.12);
+        border-radius: 8px;
+        transform: translateY(-18px);
+        opacity: 0;
+        pointer-events: none;
+        box-shadow: 0 22px 50px rgba(0,0,0,0.42);
+        transition: var(--transition);
+    }
+
+    .nav-open .nav-links {
+        transform: translateY(0);
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .nav-links li a {
+        display: block;
+        margin-left: 0;
+        padding: 12px 8px;
+    }
+
+    .grid-container,
+    .luoghi-grid,
+    .sport-flex,
+    .player-detail-container {
+        padding-left: 18px;
+        padding-right: 18px;
+    }
+
+    .storia-container {
+        margin: 24px 18px;
+        padding: 26px;
+    }
+
+    .detail-image {
+        position: static;
+        flex-basis: 100%;
+        border-radius: 8px;
+    }
+
+    .title-section h1 {
+        font-size: 2.2rem;
+    }
+
+    .team-layout {
+        grid-template-columns: 1fr;
+        padding: 24px 18px;
+    }
+
+    .team-photos {
+        position: static;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        order: 2;
+    }
 }
